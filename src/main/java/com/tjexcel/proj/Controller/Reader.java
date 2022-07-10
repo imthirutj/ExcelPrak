@@ -36,25 +36,51 @@ public class Reader {
 		return "index";
 	}
 	
-
-	@GetMapping("/Reader")
-	public String FilesReader() throws IOException {
-		 File directoryPath = new File("D:\\Files\\Folder1");
-		 File filesList[] = directoryPath.listFiles();
+	
+	
+	@GetMapping("/caller")
+public String Caller() throws IOException {
 		
-//		 File directoryPath2 = new File("D:\\Files\\Folder1");
-//	      //List of all files and directories
-//	      String contents[] = directoryPath2.list();
-//	      System.out.println("List of files and directories in the specified directory:");
-//	      for(int i=0; i<contents.length; i++) {
-//	         System.out.println(contents[i]);
-//	      }
-//		 
+		Reader rd = new Reader();
+		
+	System.out.println("welcome");
+	
+	  //Creating a File object for directory
+    File directoryPath = new File("D:\\Files\\Folder1");
+    //List of all files and directories
+    File filesList[] = directoryPath.listFiles();
+    System.out.println("List of  specified directory:");
+    for(File file : filesList) {
+     
+  	  if(!file.isFile()) {
+       System.out.println("File path: "+file.getAbsolutePath());
+       
+       FilesReader(file.getAbsolutePath());
+  	  }
+      
+       System.out.println(" ");
+    }
+	 
+    return "index";
+	}
+
+@GetMapping("/Reader")
+	public String FilesReader(String inp) throws IOException {
+		
+
+		
+		
+		
+		// File directoryPath = new File("D:\\Files\\Folder1");
+		File directoryPath = new File(inp);
+		 File filesList[] = directoryPath.listFiles();
+ 
 		
 		 
 		 List<String> FFList= new ArrayList();
 	      System.out.println("List of files and directories in the specified directory:");
 	      for(File file : filesList) {
+	    	  if(file.isFile()) {
 	         System.out.println("File name: "+file.getName());
 	         System.out.println("File path: "+file.getAbsolutePath());
 	         System.out.println("Size :"+file.getTotalSpace());
@@ -63,6 +89,7 @@ public class Reader {
 	        System.out.println("Reading this "+ file.getAbsolutePath());
     	    Excelreader(file.getAbsolutePath(),file.getName());
 	    	  System.out.println( "Finished this "+ file.getAbsolutePath()+"\n");
+	      }
 	      }
 	      System.out.println(" ===end");
 	      
